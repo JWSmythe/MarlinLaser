@@ -11,10 +11,10 @@ There are 4 parts to this project.
    - Mainboard
    - Endstops (optional)
 + Marlin Firmware
-+ Printing Software (Lightburn or your preferred software)
++ Cutting Software (Lightburn or your preferred software)
 + Questions, Comments, and Bug Reports
 
-# Hardware Section
+# Hardware
 I am using a Two Trees XY laser engraver.  Much like many generic ones with a simple 2020 extrusion in a square.
 
 For the mainboard, I am using a Creality 4.2.7 board.  It's cheap enough, available, and well supported.  It's 
@@ -71,3 +71,9 @@ Under the GCode tab in the Device settings, you'll need to add these 3 lines to 
 ; In Marlin, inline mode is enabled with 'M3 I' and disabled with 'M5 I'.
  M3 I
 ```
+
+# Questions, Comments, and Bug Reports
+
+If you wish to contact me, you can do it through here, or via my [JWSmythe.com](https://jwsmythe.com).
+
+If you find a bug, report it through the Issues tab at the top of the page.  That way, others encountering the bug you found will be able to fix it before I put the next release together.
