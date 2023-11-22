@@ -1,0 +1,242 @@
+--- Configuration_adv.h.orig	2023-07-01 20:19:17.000000000 -0400
++++ Configuration_adv.h	2023-11-21 22:31:08.138793800 -0500
+@@ -876,9 +876,11 @@
+  */
+ 
+ //#define SENSORLESS_BACKOFF_MM  { 2, 2, 0 }  // (linear=mm, rotational=°) Backoff from endstops before sensorless homing
+-
+-#define HOMING_BUMP_MM      { 5, 5, 2 }       // (linear=mm, rotational=°) Backoff from endstops after first bump
+-#define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
++// -jws 20231121 - No Z, remove Z coordinate from the following two lines.
++//#define HOMING_BUMP_MM      { 5, 5, 2 }       // (linear=mm, rotational=°) Backoff from endstops after first bump
++//#define HOMING_BUMP_DIVISOR { 2, 2, 4 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
++#define HOMING_BUMP_MM      { 5, 5 }       // (linear=mm, rotational=°) Backoff from endstops after first bump
++#define HOMING_BUMP_DIVISOR { 2, 2 }       // Re-Bump Speed Divisor (Divides the Homing Feedrate)
+ 
+ //#define HOMING_BACKOFF_POST_MM { 2, 2, 2 }  // (linear=mm, rotational=°) Backoff from endstops after homing
+ //#define XY_COUNTERPART_BACKOFF_MM 0         // (mm) Backoff X after homing Y, and vice-versa
+@@ -1095,7 +1097,11 @@
+   //#define SHAPING_MENU                // Add a menu to the LCD to set shaping parameters.
+ #endif
+ 
+-#define AXIS_RELATIVE_MODES { false, false, false, false }
++// -jws 20231120 - With E disabled (0), we need 3 elements here. 
++//#define AXIS_RELATIVE_MODES { false, false, false, false }
++// -jws 20231121 - Even witout a Z, this requires 3 elements.
++//#define AXIS_RELATIVE_MODES { false, false, false }
++#define AXIS_RELATIVE_MODES { false, false }
+ 
+ // Add a Duplicate option for well-separated conjoined nozzles
+ //#define MULTI_NOZZLE_DUPLICATION
+@@ -1345,7 +1351,9 @@
+ // @section lcd
+ 
+ #if HAS_MANUAL_MOVE_MENU
+-  #define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
++  // -jws 20231120 - With E and Z disabled (0), we need 2 elements here. 
++  //#define MANUAL_FEEDRATE { 50*60, 50*60, 4*60, 2*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
++  #define MANUAL_FEEDRATE { 50*60, 50*60 } // (mm/min) Feedrates for manual moves along X, Y, Z, E from panel
+   #define FINE_MANUAL_MOVE 0.025    // (mm) Smallest manual move (< 0.1mm) applying to Z on most machines
+   #if IS_ULTIPANEL
+     #define MANUAL_E_MOVES_RELATIVE // Display extruder move distance rather than "position"
+@@ -1409,7 +1417,8 @@
+   #endif
+ 
+   // Include a page of printer information in the LCD Main Menu
+-  //#define LCD_INFO_MENU
++  // -jws 20231120
++  #define LCD_INFO_MENU
+   #if ENABLED(LCD_INFO_MENU)
+     //#define LCD_PRINTER_INFO_IS_BOOTSCREEN // Show bootscreen(s) instead of Printer Info pages
+   #endif
+@@ -1439,7 +1448,8 @@
+   #endif
+ 
+   // Scroll a longer status message into view
+-  //#define STATUS_MESSAGE_SCROLLING
++  // -jws 20231120
++  #define STATUS_MESSAGE_SCROLLING
+ 
+   // Apply a timeout to low-priority status messages
+   //#define STATUS_MESSAGE_TIMEOUT_SEC 30 // (seconds)
+@@ -1631,10 +1641,11 @@
+   //#define UTF_FILENAME_SUPPORT
+ 
+   //#define LONG_FILENAME_HOST_SUPPORT    // Get the long filename of a file/folder with 'M33 <dosname>' and list long filenames with 'M20 L'
+-  //#define LONG_FILENAME_WRITE_SUPPORT   // Create / delete files with long filenames via M28, M30, and Binary Transfer Protocol
++  // -jws 20231120
++  #define LONG_FILENAME_WRITE_SUPPORT   // Create / delete files with long filenames via M28, M30, and Binary Transfer Protocol
+   //#define M20_TIMESTAMP_SUPPORT         // Include timestamps by adding the 'T' flag to M20 commands
+-
+-  //#define SCROLL_LONG_FILENAMES         // Scroll long filenames in the SD card menu
++  // -jws 20231120
++  #define SCROLL_LONG_FILENAMES         // Scroll long filenames in the SD card menu
+ 
+   //#define SD_ABORT_NO_COOLDOWN          // Leave the heaters on after Stop Print (not recommended!)
+ 
+@@ -1826,13 +1837,15 @@
+    */
+   //#define STATUS_COMBINE_HEATERS    // Use combined heater images instead of separate ones
+   //#define STATUS_HOTEND_NUMBERLESS  // Use plain hotend icons instead of numbered ones (with 2+ hotends)
+-  #define STATUS_HOTEND_INVERTED      // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM for numbered hotends)
+-  #define STATUS_HOTEND_ANIM          // Use a second bitmap to indicate hotend heating
+-  #define STATUS_BED_ANIM             // Use a second bitmap to indicate bed heating
+-  #define STATUS_CHAMBER_ANIM         // Use a second bitmap to indicate chamber heating
+-  //#define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
+-  //#define STATUS_COOLER_ANIM        // Use a second bitmap to indicate laser cooling
+-  //#define STATUS_FLOWMETER_ANIM     // Use multiple bitmaps to indicate coolant flow
++  // -jws 20231120 - commented out next 4.
++  //#define STATUS_HOTEND_INVERTED      // Show solid nozzle bitmaps when heating (Requires STATUS_HOTEND_ANIM for numbered hotends)
++  //#define STATUS_HOTEND_ANIM          // Use a second bitmap to indicate hotend heating
++  //#define STATUS_BED_ANIM             // Use a second bitmap to indicate bed heating
++  //#define STATUS_CHAMBER_ANIM         // Use a second bitmap to indicate chamber heating
++  // -jws 20231120 - uncommented next 3.
++  #define STATUS_CUTTER_ANIM        // Use a second bitmap to indicate spindle / laser active
++  #define STATUS_COOLER_ANIM        // Use a second bitmap to indicate laser cooling
++  #define STATUS_FLOWMETER_ANIM     // Use multiple bitmaps to indicate coolant flow
+   //#define STATUS_ALT_BED_BITMAP     // Use the alternative bed bitmap
+   //#define STATUS_ALT_FAN_BITMAP     // Use the alternative fan bitmap
+   //#define STATUS_FAN_FRAMES 3       // :[0,1,2,3,4] Number of fan animation frames
+@@ -2058,6 +2071,7 @@
+  *
+  * Warning: Does not respect endstops!
+  */
++// -jws 20231121 - disable babystepping.
+ //#define BABYSTEPPING
+ #if ENABLED(BABYSTEPPING)
+   //#define INTEGRATED_BABYSTEPPING         // EXPERIMENTAL integration of babystepping into the Stepper ISR
+@@ -2440,7 +2454,8 @@
+  * Currently handles M108, M112, M410, M876
+  * NOTE: Not yet implemented for all platforms.
+  */
+-//#define EMERGENCY_PARSER
++ // -jws 20231120
++#define EMERGENCY_PARSER
+ 
+ /**
+  * Realtime Reporting (requires EMERGENCY_PARSER)
+@@ -3318,10 +3333,11 @@
+  * See https://marlinfw.org/docs/configuration/2.0.9/laser_spindle.html for more config details.
+  */
+ //#define SPINDLE_FEATURE
+-//#define LASER_FEATURE
++// -jws 20231120 - obviously required.
++#define LASER_FEATURE
+ #if EITHER(SPINDLE_FEATURE, LASER_FEATURE)
+-  #define SPINDLE_LASER_ACTIVE_STATE    LOW    // Set to "HIGH" if SPINDLE_LASER_ENA_PIN is active HIGH
+-
++  // -jws 20220202 change active state from low to high.  Spent two days chasing this.
++  #define SPINDLE_LASER_ACTIVE_STATE    HIGH    // Set to "HIGH" if SPINDLE_LASER_ENA_PIN is active HIGH
+   #define SPINDLE_LASER_USE_PWM                // Enable if your controller supports setting the speed/power
+   #if ENABLED(SPINDLE_LASER_USE_PWM)
+     #define SPINDLE_LASER_PWM_INVERT    false  // Set to "true" if the speed/power goes up when you want it to go slower
+@@ -3336,7 +3352,6 @@
+     #define AIR_EVACUATION_ACTIVE       LOW    // Set to "HIGH" if the on/off function is active HIGH
+     //#define AIR_EVACUATION_PIN        42     // Override the default Cutter Vacuum or Laser Blower pin
+   #endif
+-
+   //#define AIR_ASSIST                         // Air Assist control with G-codes M8-M9
+   #if ENABLED(AIR_ASSIST)
+     #define AIR_ASSIST_ACTIVE           LOW    // Active state on air assist pin
+@@ -3441,7 +3456,8 @@
+      * CUTTER_MODE_CONTINUOUS. The option allows M3 laser power to be commited without waiting
+      * for a planner syncronization
+      */
+-    //#define LASER_POWER_SYNC
++    // -jws 20231120
++    #define LASER_POWER_SYNC
+ 
+     /**
+      * Scale the laser's power in proportion to the movement rate.
+@@ -3450,7 +3466,8 @@
+      * - Ramps the power up every N steps to approximate the speed trapezoid.
+      * - Due to the limited power resolution this is only approximate.
+      */
+-    //#define LASER_POWER_TRAP
++    // -jws 20231120
++    #define LASER_POWER_TRAP
+ 
+     //
+     // Laser I2C Ammeter (High precision INA226 low/high side module)
+@@ -3488,7 +3505,8 @@
+  *
+  * NOTE: This option sacrifices some cooling fan speed options.
+  */
+-//#define LASER_SYNCHRONOUS_M106_M107
++// -jws 20231120 - Give every opportunity to work.
++#define LASER_SYNCHRONOUS_M106_M107
+ 
+ /**
+  * Coolant Control
+@@ -3697,8 +3715,10 @@
+  * Note that G0 feedrates should be used with care for 3D printing (if used at all).
+  * High feedrates may cause ringing and harm print quality.
+  */
+-//#define PAREN_COMMENTS      // Support for parentheses-delimited comments
+-//#define GCODE_MOTION_MODES  // Remember the motion mode (G0 G1 G2 G3 G5 G38.X) and apply for X Y Z E F, etc.
++ // -jws 20231120
++#define PAREN_COMMENTS      // Support for parentheses-delimited comments
++// -jws 20231120
++#define GCODE_MOTION_MODES  // Remember the motion mode (G0 G1 G2 G3 G5 G38.X) and apply for X Y Z E F, etc.
+ 
+ // Enable and set a (default) feedrate for all G0 moves
+ //#define G0_FEEDRATE 3000 // (mm/min)
+@@ -3845,15 +3865,17 @@
+  * Host Prompt Support enables Marlin to use the host for user prompts so
+  * filament runout and other processes can be managed from the host side.
+  */
+-//#define HOST_ACTION_COMMANDS
++ // -jws 20231120
++#define HOST_ACTION_COMMANDS
+ #if ENABLED(HOST_ACTION_COMMANDS)
+-  //#define HOST_PAUSE_M76                // Tell the host to pause in response to M76
+-  //#define HOST_PROMPT_SUPPORT           // Initiate host prompts to get user feedback
++// -jws 20231120 - enable all in the next 8 lines
++  #define HOST_PAUSE_M76                // Tell the host to pause in response to M76
++  #define HOST_PROMPT_SUPPORT           // Initiate host prompts to get user feedback
+   #if ENABLED(HOST_PROMPT_SUPPORT)
+-    //#define HOST_STATUS_NOTIFICATIONS   // Send some status messages to the host as notifications
++    #define HOST_STATUS_NOTIFICATIONS   // Send some status messages to the host as notifications
+   #endif
+-  //#define HOST_START_MENU_ITEM          // Add a menu item that tells the host to start
+-  //#define HOST_SHUTDOWN_MENU_ITEM       // Add a menu item that tells the host to shut down
++  #define HOST_START_MENU_ITEM          // Add a menu item that tells the host to start
++  #define HOST_SHUTDOWN_MENU_ITEM       // Add a menu item that tells the host to shut down
+ #endif
+ 
+ // @section extras
+@@ -4213,17 +4235,20 @@
+ //
+ // M42 - Set pin states
+ //
+-//#define DIRECT_PIN_CONTROL
++// -jws 20231120
++#define DIRECT_PIN_CONTROL
+ 
+ //
+ // M43 - display pin status, toggle pins, watch pins, watch endstops & toggle LED, test servo probe
+ //
+-//#define PINS_DEBUGGING
++// -jws 20231120
++#define PINS_DEBUGGING
+ 
+ // Enable Tests that will run at startup and produce a report
+ //#define MARLIN_TEST_BUILD
+ 
+ // Enable Marlin dev mode which adds some special commands
++// -jws 20231121
+ //#define MARLIN_DEV_MODE
+ 
+ #if ENABLED(MARLIN_DEV_MODE)
+@@ -4244,8 +4269,9 @@
+ /**
+  * Software Reset options
+  */
+-//#define SOFT_RESET_VIA_SERIAL         // 'KILL' and '^X' commands will soft-reset the controller
+-//#define SOFT_RESET_ON_KILL            // Use a digital button to soft-reset the controller after KILL
++ // -jws 20231120 - enable next 2 for KILL and ^X to work.
++#define SOFT_RESET_VIA_SERIAL         // 'KILL' and '^X' commands will soft-reset the controller
++#define SOFT_RESET_ON_KILL            // Use a digital button to soft-reset the controller after KILL
+ 
+ // Report uncleaned reset reason from register r2 instead of MCUSR. Supported by Optiboot on AVR.
+ //#define OPTIBOOT_RESET_REASON
