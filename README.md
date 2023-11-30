@@ -28,7 +28,7 @@ Make sure your laser machine's stepper power suppy is within specs for your sele
 * The laser's power is attached to the hotend heat connector (bottom row, far right pair on the green connector)
 * The laser signal/PWM pin goes to the IN pin of the BLTouch header.  The center pin of the white 5 pin header.
 
-[ More hardware information and pictures coming soon ]
+<img src='Creality.4.2.7 Connection Diagram.png' alt='Creality 4.2.7 Mainboard Connection Diagram'>
 
 # Marlin Firmware
 
