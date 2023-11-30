@@ -26,7 +26,7 @@ Make sure your laser machine's stepper power suppy is within specs for your sele
 
 * Attach your power, stepper, and endstops in the normal locations.   If you want dual X or dual Y, you have two extra drivers to use onboard already.
 * The laser's power is attached to the hotend heat connector (bottom row, far right pair on the green connector)
-* The laser signal/PWM pin goes to the K-FAN1 connector, left side pin (+)
+* The laser signal/PWM pin goes to the IN pin of the BLTouch header.  The center pin of the white 5 pin header.
 
 [ More hardware information and pictures coming soon ]
 
